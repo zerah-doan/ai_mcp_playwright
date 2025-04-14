@@ -1,6 +1,6 @@
 # Playwright Test Automation Project
 
-This project contains automated end-to-end tests using [Playwright](https://playwright.dev/), a modern web testing framework.
+This project contains automated end-to-end tests using [Playwright](https://playwright.dev/) and Model Context Protocol (MCP) server for enhanced test automation capabilities.
 
 ## Test Suites
 
@@ -15,6 +15,7 @@ The project includes several test suites demonstrating different automation scen
 
 - Node.js installed on your machine
 - Playwright Test dependencies
+- MCP Server running locally
 
 ## Setup
 
@@ -26,6 +27,11 @@ npm install
 2. Install Playwright browsers:
 ```bash
 npx playwright install
+```
+
+3. Start the MCP server:
+```bash
+npm run mcp-server
 ```
 
 ## Running Tests
@@ -43,6 +49,24 @@ npx playwright test example.spec.ts
 Run tests in headed mode:
 ```bash
 npx playwright test --headed
+```
+
+## MCP Server Configuration
+
+The MCP server enhances test automation by providing:
+- Improved test stability through AI-powered element selection
+- Dynamic wait handling
+- Intelligent test retry mechanisms
+- Enhanced error reporting
+
+Configure the MCP server settings in your test files:
+```typescript
+import { test } from '@playwright/test';
+import { mcpConnect } from '@mcp/playwright';
+
+test.beforeEach(async ({ page }) => {
+  await mcpConnect(page);
+});
 ```
 
 ## Test Reports
@@ -71,4 +95,5 @@ Tests are configured in `playwright.config.ts`. This includes settings for:
 - Test timeouts
 - Parallel execution
 - Screenshots and video capture
+- MCP server configuration
 - Other Playwright-specific options
