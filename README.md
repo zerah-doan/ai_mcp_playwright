@@ -47,6 +47,8 @@ npx playwright install
 
 ## Running Tests
 
+### Local Execution
+
 Run all tests:
 ```bash
 npx playwright test
@@ -67,6 +69,29 @@ Run tests in headed mode:
 npx playwright test --headed
 ```
 
+### Docker Execution
+
+1. Build the Docker image:
+```bash
+docker build -t playwright-tests .
+```
+
+2. Run tests in container:
+```bash
+docker run --rm playwright-tests
+```
+
+To run specific test suites in Docker:
+```bash
+# Run UI tests only
+docker run --rm playwright-tests npx playwright test tests/ui/
+
+# Run API tests only
+docker run --rm playwright-tests npx playwright test tests/api/
+```
+
+Note: When running tests in Docker, make sure your environment variables in `.env` file are configured for container access. If testing against localhost services, use `host.docker.internal` instead of `localhost`.
+
 ## Test Reports
 
 After test execution, HTML reports are generated in the `playwright-report` directory. To view the report:
@@ -86,7 +111,9 @@ npx playwright show-report
 │       └── example.api.spec.ts
 ├── playwright-report/     # Test reports
 ├── test-results/         # Test artifacts
-└── .env                  # Environment variables
+├── Dockerfile            # Docker configuration
+├── .dockerignore        # Docker ignore file
+└── .env                 # Environment variables
 ```
 
 ## Configuration
