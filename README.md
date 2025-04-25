@@ -1,21 +1,37 @@
 # Playwright Test Automation Project
 
-This project contains automated end-to-end tests using [Playwright](https://playwright.dev/) and Model Context Protocol (MCP) server for enhanced test automation capabilities.
+This project contains automated end-to-end tests using [Playwright](https://playwright.dev/).
 
 ## Test Suites
 
-The project includes several test suites demonstrating different automation scenarios:
+The project includes both UI and API test suites:
 
-- **Example Tests** (`tests/example.spec.ts`): Basic tests for Playwright's documentation site
-- **Google Search** (`tests/google-search.spec.ts`): Automated search functionality testing on Google
-- **Visa Login** (`tests/visa-login.spec.ts`): Login automation for Visa Online portal
-- **Todo App** (`tests-examples/demo-todo-app.spec.ts`): Comprehensive test suite for a Todo application
+### UI Tests (`tests/ui/`)
+- Example UI tests demonstrating web page navigation and assertions
+- Located in `tests/ui/*.spec.ts`
+
+### API Tests (`tests/api/`)
+- Example API tests demonstrating REST API testing capabilities
+- Located in `tests/api/*.spec.ts`
+
+## Environment Configuration
+
+The project uses environment variables for configuration. Create a `.env` file in the root directory with the following variables:
+
+```properties
+PLAYWRIGHT_BASE_URL=https://playwright.dev
+API_BASE_URL=https://jsonplaceholder.typicode.com
+```
+
+You can override these values by:
+1. Modifying the `.env` file
+2. Setting environment variables directly in your shell
+3. Creating environment-specific files (e.g., `.env.test`, `.env.staging`)
 
 ## Prerequisites
 
 - Node.js installed on your machine
 - Playwright Test dependencies
-- MCP Server running locally
 
 ## Setup
 
@@ -29,11 +45,6 @@ npm install
 npx playwright install
 ```
 
-3. Start the MCP server:
-```bash
-npm run mcp-server
-```
-
 ## Running Tests
 
 Run all tests:
@@ -41,32 +52,19 @@ Run all tests:
 npx playwright test
 ```
 
-Run a specific test file:
+Run UI tests only:
 ```bash
-npx playwright test example.spec.ts
+npx playwright test tests/ui/
+```
+
+Run API tests only:
+```bash
+npx playwright test tests/api/
 ```
 
 Run tests in headed mode:
 ```bash
 npx playwright test --headed
-```
-
-## MCP Server Configuration
-
-The MCP server enhances test automation by providing:
-- Improved test stability through AI-powered element selection
-- Dynamic wait handling
-- Intelligent test retry mechanisms
-- Enhanced error reporting
-
-Configure the MCP server settings in your test files:
-```typescript
-import { test } from '@playwright/test';
-import { mcpConnect } from '@mcp/playwright';
-
-test.beforeEach(async ({ page }) => {
-  await mcpConnect(page);
-});
 ```
 
 ## Test Reports
@@ -79,13 +77,16 @@ npx playwright show-report
 ## Project Structure
 
 ```
-├── tests/                  # Test files
-│   ├── example.spec.ts     # Example tests
-│   ├── google-search.spec.ts
-│   └── visa-login.spec.ts
-├── tests-examples/         # Example test suites
-├── playwright-report/      # Test reports
-└── test-results/          # Test artifacts
+├── config/                 # Configuration files
+│   └── env.ts             # Environment configuration
+├── tests/                 # Test files root directory
+│   ├── ui/               # UI test files
+│   │   └── example.ui.spec.ts
+│   └── api/             # API test files
+│       └── example.api.spec.ts
+├── playwright-report/     # Test reports
+├── test-results/         # Test artifacts
+└── .env                  # Environment variables
 ```
 
 ## Configuration
@@ -95,5 +96,4 @@ Tests are configured in `playwright.config.ts`. This includes settings for:
 - Test timeouts
 - Parallel execution
 - Screenshots and video capture
-- MCP server configuration
 - Other Playwright-specific options
