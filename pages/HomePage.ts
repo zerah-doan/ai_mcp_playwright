@@ -1,4 +1,4 @@
-import { Page } from '@playwright/test';
+import { Page, Locator } from '@playwright/test';
 import { BasePage } from './BasePage';
 
 export class HomePage extends BasePage {
@@ -7,9 +7,9 @@ export class HomePage extends BasePage {
     }
 
     // Locators
-    private mainHeading = () => this.page.locator('h1');
-    private getStartedLink = () => this.page.getByRole('link', { name: 'Get started' });
-    private docsNavigation = () => this.page.locator('nav.theme-doc-sidebar-menu');
+    private mainHeading = (): Locator => this.page.locator('h1');
+    private getStartedLink = (): Locator => this.page.getByRole('link', { name: 'Get started' });
+    private docsNavigation = (): Locator => this.page.locator('nav.theme-doc-sidebar-menu');
 
     // Actions
     async clickGetStarted(): Promise<void> {

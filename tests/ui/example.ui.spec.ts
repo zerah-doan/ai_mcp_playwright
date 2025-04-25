@@ -41,7 +41,7 @@ test.describe('Playwright Homepage', () => {
         test('should meet accessibility guidelines', async ({ page, logger }) => {
             logger.info('Running accessibility tests');
             const results = await new AxeBuilder({ page })
-                .disableRules(['empty-heading', 'heading-order']) // Temporarily disable known issues
+                .disableRules(['empty-heading', 'heading-order'])
                 .analyze();
 
             logger.debug('Accessibility test results', {
@@ -49,16 +49,13 @@ test.describe('Playwright Homepage', () => {
                 passes: results.passes.length
             });
 
-            // Log violations for debugging
-            if (results.violations.length > 0) {
-                logger.warn('Accessibility violations found:', { violations: results.violations });
-            }
+            // Always log violations for debugging
+            logger.info('Accessibility violations:', { violations: results.violations });
 
-            // Only fail on critical and serious issues
+            // Check for critical and serious issues without conditional
             const criticalViolations = results.violations.filter(v =>
                 v.impact === 'critical' || v.impact === 'serious'
             );
-
             expect(criticalViolations).toEqual([]);
         });
     });
@@ -66,12 +63,14 @@ test.describe('Playwright Homepage', () => {
     test.describe('Visual Testing', () => {
         test('should match homepage snapshot', async ({ page, logger }) => {
             logger.info('Taking homepage screenshot for visual comparison');
-            await page.waitForLoadState('networkidle');
+            // Wait for page to be fully loaded and stable
+            await page.waitForLoadState('domcontentloaded');
+            // Wait for any dynamic content to settle
+            await expect(page.locator('body')).toBeVisible();
             logger.debug('Page ready for screenshot');
 
-            // Create snapshots first time, then compare
             await expect(page).toHaveScreenshot('homepage.png', {
-                threshold: 0.2, // Allow small differences
+                threshold: 0.2,
                 maxDiffPixels: 100
             });
         });

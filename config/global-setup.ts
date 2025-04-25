@@ -1,6 +1,6 @@
 import { register } from 'ts-node';
 
-export default async function globalSetup() {
+export default async function globalSetup(): Promise<void> {
     register({
         transpileOnly: true,
         compilerOptions: {

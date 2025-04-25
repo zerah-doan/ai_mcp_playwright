@@ -32,12 +32,34 @@ export class ApiUtils {
         url: string,
         data?: object
     ): Promise<T> {
-        const response = await this.request[method.toLowerCase()](url, {
-            data,
-            headers: {
-                'Content-Type': 'application/json',
-            },
-        });
+        let response;
+        switch (method.toUpperCase()) {
+            case 'GET':
+                response = await this.request.get(url, {
+                    headers: { 'Content-Type': 'application/json' }
+                });
+                break;
+            case 'POST':
+                response = await this.request.post(url, {
+                    data,
+                    headers: { 'Content-Type': 'application/json' }
+                });
+                break;
+            case 'PUT':
+                response = await this.request.put(url, {
+                    data,
+                    headers: { 'Content-Type': 'application/json' }
+                });
+                break;
+            case 'DELETE':
+                response = await this.request.delete(url, {
+                    data,
+                    headers: { 'Content-Type': 'application/json' }
+                });
+                break;
+            default:
+                throw new Error(`Unsupported HTTP method: ${method}`);
+        }
 
         if (!response.ok()) {
             throw new Error(`API request failed: ${response.status()} ${response.statusText()}`);
