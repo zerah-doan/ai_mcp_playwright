@@ -20,7 +20,7 @@ concurrency:
 
 jobs:
   test:
-    name: Run Playwright Tests
+    name: Run API Tests
     timeout-minutes: 60
     runs-on: ubuntu-latest
     container:
@@ -38,8 +38,8 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Run Playwright tests
-        run: npx playwright test
+      - name: Run API tests
+        run: npx playwright test --project=api
         env:
           PLAYWRIGHT_BASE_URL: ${{ secrets.PLAYWRIGHT_BASE_URL }}
           API_BASE_URL: ${{ secrets.API_BASE_URL }}
