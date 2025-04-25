@@ -46,6 +46,26 @@ export default defineConfig({
       },
     },
 
+    /* Visual Testing Configuration */
+    {
+      name: 'visual',
+      testDir: './tests/ui',
+      use: {
+        screenshot: 'on',
+        video: 'on',
+        trace: 'on',
+      },
+    },
+
+    /* Accessibility Testing Configuration */
+    {
+      name: 'accessibility',
+      testDir: './tests/ui',
+      use: {
+        actionTimeout: 10000,
+      },
+    },
+
     /* UI Testing Configurations */
     {
       name: 'chromium',
