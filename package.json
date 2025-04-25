@@ -1,18 +1,42 @@
 {
   "name": "ai_mcp_playwright",
   "version": "1.0.0",
+  "description": "Automated testing suite using Playwright for UI and API testing",
   "main": "index.js",
-  "scripts": {},
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "description": "",
-  "devDependencies": {
-    "@playwright/test": "^1.51.1",
-    "@types/node": "^22.14.1"
+  "scripts": {
+    "test": "playwright test",
+    "test:ci": "playwright test --shard=${SHARD:-1/1}",
+    "test:ui": "playwright test tests/ui/",
+    "test:api": "playwright test tests/api/",
+    "test:headed": "playwright test --headed",
+    "test:visual": "playwright test -c playwright.visual.config.ts",
+    "test:a11y": "playwright test -c playwright.a11y.config.ts",
+    "lint": "eslint . --ext .ts",
+    "format": "prettier --write .",
+    "report": "playwright show-report",
+    "update:snapshots": "playwright test --update-snapshots"
   },
-  "dependencies": {
-    "ai_mcp_playwright": "file:",
-    "dotenv": "^16.5.0"
+  "keywords": [
+    "playwright",
+    "testing",
+    "automation",
+    "e2e",
+    "api-testing"
+  ],
+  "author": "Your Team",
+  "license": "ISC",
+  "devDependencies": {
+    "@axe-core/playwright": "^4.10.1",
+    "@playwright/test": "^1.51.1",
+    "@types/node": "^22.14.1",
+    "@typescript-eslint/eslint-plugin": "^7.1.0",
+    "@typescript-eslint/parser": "^7.1.0",
+    "ajv": "^8.17.1",
+    "dotenv": "^16.5.0",
+    "eslint": "^8.57.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-playwright": "^1.3.0",
+    "prettier": "^3.2.0",
+    "ts-node": "^10.9.2"
   }
 }

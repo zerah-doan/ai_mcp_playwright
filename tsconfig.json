@@ -1,0 +1,30 @@
+{
+    "compilerOptions": {
+        "baseUrl": ".",
+        "target": "es2021",
+        "strict": true,
+        "module": "commonjs",
+        "moduleResolution": "node",
+        "resolveJsonModule": true,
+        "esModuleInterop": true,
+        "skipLibCheck": true,
+        "forceConsistentCasingInFileNames": true,
+        "paths": {
+            "@utils/*": [
+                "utils/*"
+            ],
+            "@pages/*": [
+                "pages/*"
+            ],
+            "@tests/*": [
+                "tests/*"
+            ],
+            "@config/*": [
+                "config/*"
+            ]
+        }
+    },
+    "include": [
+        "**/*.ts"
+    ]
+}

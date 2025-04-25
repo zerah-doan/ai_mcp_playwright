@@ -92,6 +92,39 @@ docker run --rm playwright-tests npx playwright test tests/api/
 
 Note: When running tests in Docker, make sure your environment variables in `.env` file are configured for container access. If testing against localhost services, use `host.docker.internal` instead of `localhost`.
 
+### CI/CD with GitHub Actions
+
+This project includes automated CI/CD pipeline using GitHub Actions. The workflow:
+- Triggers on push/pull requests to main/master branches
+- Can be manually triggered from GitHub Actions UI
+- Runs tests in parallel using test sharding (3 shards)
+- Generates and merges test reports
+- Deploys test reports to GitHub Pages
+
+#### Setup Required
+1. Add these secrets in your GitHub repository settings (Settings > Secrets and variables > Actions):
+   - `PLAYWRIGHT_BASE_URL`
+   - `API_BASE_URL`
+
+2. Enable GitHub Pages:
+   - Go to repository settings
+   - Navigate to Pages section
+   - Under "Source", select "GitHub Actions"
+
+#### Features
+- Parallel test execution for faster results
+- Automatic test report generation
+- Report deployment to GitHub Pages (on main branch)
+- Caching of npm dependencies
+- Artifact retention for 30 days
+
+#### Viewing Test Reports
+After workflow completion:
+1. Go to Actions tab in your repository
+2. Click on the workflow run
+3. Download artifacts for detailed reports
+4. For main branch runs, view the deployed report on GitHub Pages
+
 ## Test Reports
 
 After test execution, HTML reports are generated in the `playwright-report` directory. To view the report:
@@ -102,18 +135,32 @@ npx playwright show-report
 ## Project Structure
 
 ```
-├── config/                 # Configuration files
-│   └── env.ts             # Environment configuration
-├── tests/                 # Test files root directory
-│   ├── ui/               # UI test files
-│   │   └── example.ui.spec.ts
-│   └── api/             # API test files
-│       └── example.api.spec.ts
-├── playwright-report/     # Test reports
-├── test-results/         # Test artifacts
-├── Dockerfile            # Docker configuration
-├── .dockerignore        # Docker ignore file
-└── .env                 # Environment variables
+├── pages/               # Page Object Models
+│   ├── BasePage.ts     # Base page class with common methods
+│   └── HomePage.ts     # Home page specific methods
+├── utils/              # Utilities and helpers
+│   ├── apiUtils.ts    # API testing utilities
+│   ├── logger.ts      # Test logging utility
+│   └── testData.ts    # Test data management
+├── tests/             # Test files
+│   ├── api/          # API test files
+│   │   └── example.api.spec.ts
+│   ├── fixtures/     # Test fixtures
+│   │   └── testFixtures.ts
+│   └── ui/          # UI test files
+│       └── example.ui.spec.ts
+├── config/           # Configuration files
+│   ├── env.ts       # Environment configuration
+│   ├── global-setup.ts # TypeScript module resolution setup
+│   └── types.ts     # TypeScript type definitions
+├── playwright-report/ # Test reports
+├── test-results/    # Test artifacts
+├── Dockerfile       # Docker configuration
+├── .dockerignore    # Docker ignore patterns
+├── playwright.config.ts      # Main Playwright configuration
+├── playwright.a11y.config.ts # Accessibility testing config
+├── playwright.visual.config.ts # Visual testing config
+└── .env            # Environment variables
 ```
 
 ## Configuration
