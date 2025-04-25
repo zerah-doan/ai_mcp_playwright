@@ -4,15 +4,25 @@ This project contains automated end-to-end tests using [Playwright](https://play
 
 ## Test Suites
 
-The project includes both UI and API test suites:
+The project includes UI, API, Visual, and Accessibility test suites:
 
 ### UI Tests (`tests/ui/`)
 - Example UI tests demonstrating web page navigation and assertions
 - Located in `tests/ui/*.spec.ts`
+- Runs on Chromium, Firefox, and WebKit browsers
 
 ### API Tests (`tests/api/`)
 - Example API tests demonstrating REST API testing capabilities
 - Located in `tests/api/*.spec.ts`
+
+### Visual Tests
+- Visual regression testing using Playwright's snapshot capabilities
+- Uses the same test files but runs with `--project=visual`
+- Includes screenshot comparisons and video recording
+
+### Accessibility Tests
+- Accessibility testing configuration with extended timeouts
+- Uses the same test files but runs with `--project=accessibility`
 
 ## Environment Configuration
 
@@ -54,14 +64,21 @@ Run all tests:
 npx playwright test
 ```
 
-Run UI tests only:
+Run specific test projects:
 ```bash
-npx playwright test tests/ui/
-```
+# UI tests only
+npx playwright test --project=chromium
+npx playwright test --project=firefox
+npx playwright test --project=webkit
 
-Run API tests only:
-```bash
-npx playwright test tests/api/
+# API tests only
+npx playwright test --project=api
+
+# Visual tests only
+npx playwright test --project=visual
+
+# Accessibility tests only
+npx playwright test --project=accessibility
 ```
 
 Run tests in headed mode:
@@ -156,18 +173,19 @@ npx playwright show-report
 ├── playwright-report/ # Test reports
 ├── test-results/    # Test artifacts
 ├── Dockerfile       # Docker configuration
-├── .dockerignore    # Docker ignore patterns
 ├── playwright.config.ts      # Main Playwright configuration
-├── playwright.a11y.config.ts # Accessibility testing config
-├── playwright.visual.config.ts # Visual testing config
 └── .env            # Environment variables
 ```
 
 ## Configuration
 
 Tests are configured in `playwright.config.ts`. This includes settings for:
-- Browsers to test
-- Test timeouts
+- Multiple project configurations:
+  - API testing
+  - Visual testing with full snapshots
+  - Accessibility testing
+  - Browser-specific UI testing (Chromium, Firefox, WebKit)
+- Test timeouts and retry settings
 - Parallel execution
 - Screenshots and video capture
-- Other Playwright-specific options
+- Environment-specific configurations
