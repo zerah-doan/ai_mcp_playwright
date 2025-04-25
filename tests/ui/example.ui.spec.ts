@@ -12,4 +12,8 @@ test.describe('Example UI Test Suite', () => {
         const heading = page.locator('h1');
         await expect(heading).toContainText('Playwright');
     });
+
+    test.afterAll(async ({ browser }) => {
+        await browser.close();
+    });
 });
