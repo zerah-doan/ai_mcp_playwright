@@ -114,8 +114,7 @@ Note: When running tests in Docker, make sure your environment variables in `.en
 This project includes automated CI/CD pipeline using GitHub Actions. The workflow:
 - Triggers on push/pull requests to main/master branches
 - Can be manually triggered from GitHub Actions UI
-- Runs tests in parallel using test sharding (3 shards)
-- Generates and merges test reports
+- Generates test reports
 - Deploys test reports to GitHub Pages
 
 #### Setup Required
@@ -129,7 +128,6 @@ This project includes automated CI/CD pipeline using GitHub Actions. The workflo
    - Under "Source", select "GitHub Actions"
 
 #### Features
-- Parallel test execution for faster results
 - Automatic test report generation
 - Report deployment to GitHub Pages (on main branch)
 - Caching of npm dependencies
