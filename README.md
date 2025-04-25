@@ -114,31 +114,35 @@ Note: When running tests in Docker, make sure your environment variables in `.en
 This project includes automated CI/CD pipeline using GitHub Actions. The workflow:
 - Triggers on push/pull requests to main/master branches
 - Can be manually triggered from GitHub Actions UI
-- Generates test reports
-- Deploys test reports to GitHub Pages
+- Runs API tests in a containerized environment
+- Uses official Playwright Docker image (v1.51.1-noble)
+- Generates and deploys test reports to GitHub Pages
 
 #### Setup Required
 1. Add these secrets in your GitHub repository settings (Settings > Secrets and variables > Actions):
-   - `PLAYWRIGHT_BASE_URL`
-   - `API_BASE_URL`
+   - `PLAYWRIGHT_BASE_URL` - Base URL for your application
+   - `API_BASE_URL` - Base URL for your API endpoints
 
 2. Enable GitHub Pages:
    - Go to repository settings
    - Navigate to Pages section
-   - Under "Source", select "GitHub Actions"
+   - Under "Build and deployment", set source to "GitHub Actions"
 
 #### Features
+- Containerized test execution using mcr.microsoft.com/playwright:v1.51.1-noble
 - Automatic test report generation
-- Report deployment to GitHub Pages (on main branch)
-- Caching of npm dependencies
+- Two-stage pipeline: test execution and report deployment
+- Secure secrets management
+- Report deployment to GitHub Pages (on main/master branch pushes only)
 - Artifact retention for 30 days
 
 #### Viewing Test Reports
 After workflow completion:
 1. Go to Actions tab in your repository
 2. Click on the workflow run
-3. Download artifacts for detailed reports
-4. For main branch runs, view the deployed report on GitHub Pages
+3. The report will be automatically deployed to GitHub Pages if the run was triggered by a push to main/master
+4. Access the report at `https://<username>.github.io/<repository-name>/`
+5. For pull requests or manual runs, you can download the report artifacts from the Actions tab
 
 ## Test Reports
 
